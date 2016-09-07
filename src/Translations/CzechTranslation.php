@@ -101,8 +101,6 @@ class CzechTranslation implements IMockTranslator {
 		'ublaboo_datagrid.next' => 'Další',
 		'ublaboo_datagrid.choose' => 'Zvol',
 		'ublaboo_datagrid.execute' => 'Vyhodnotit',
-		// Bootstrap
-		'Bootstrap.Paginator' => 'Strana %d z %d',
 	];
 
 	public function translate($message, $count = NULL) {
