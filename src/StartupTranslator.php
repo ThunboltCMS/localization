@@ -3,7 +3,6 @@
 namespace Thunbolt\Localization;
 
 use Nette;
-use Thunbolt\Errors\ErrorTemplate;
 use Thunbolt\Templates\Filters;
 use WebChemistry;
 
