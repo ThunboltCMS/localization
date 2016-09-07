@@ -31,7 +31,6 @@ class StartupTranslator {
 
 		$this->translateForms();
 		$this->translateDateTime();
-		$this->translateErrorPage();
 		$this->translateStrings();
 		$this->translateTimeAgo();
 		$this->translateFilters();
@@ -114,33 +113,6 @@ class StartupTranslator {
 		foreach ($translate as $index => $value) {
 			WebChemistry\Utils\DateTime::$translatedDays[$index] = $this->translator->translate($value);
 		}
-	}
-
-	protected function translateErrorPage() {
-		$errors = [
-			400 => [
-				'core.error.400.title',
-				'core.error.400.msg'
-			],
-			403 => [
-				'core.error.403.title',
-				'core.error.403.msg'
-			],
-			404 => [
-				'core.error.404.title',
-				'core.error.404.msg'
-			],
-			500 => [
-				'core.error.500.title',
-				'core.error.500.msg'
-			]
-		];
-		foreach ($errors as $i => $values) {
-			foreach ($values as $index => $row) {
-				$errors[$i][$index] = $this->translator->translate($row);
-			}
-		}
-		ErrorTemplate::$messages = $errors;
 	}
 
 	protected function translateStrings() {
