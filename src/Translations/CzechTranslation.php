@@ -101,6 +101,16 @@ class CzechTranslation implements IMockTranslator {
 		'ublaboo_datagrid.next' => 'Další',
 		'ublaboo_datagrid.choose' => 'Zvol',
 		'ublaboo_datagrid.execute' => 'Vyhodnotit',
+		// admin
+		'admin.title' => 'Administrace',
+		'admin.signOut' => 'Odhlásit se',
+		'admin.signIn' => 'Přihlásit se',
+		'admin.memberFrom' => 'Členem od',
+		'admin.mainMenu' => 'Hlavní menu',
+		'admin.profile' => 'Profil',
+		'admin.skin' => 'Vzhled',
+		'admin.homepage' => 'Domovská stránka',
+		'admin.loginAdmin' => 'admin',
 	];
 
 	public function translate($message, $count = NULL) {

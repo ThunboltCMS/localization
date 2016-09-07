@@ -3,6 +3,7 @@
 namespace Thunbolt\Localization;
 
 use Nette;
+use Thunbolt\Administration\Localization;
 use Thunbolt\Templates\Filters;
 use WebChemistry;
 
@@ -33,6 +34,9 @@ class StartupTranslator {
 		$this->translateStrings();
 		$this->translateTimeAgo();
 		$this->translateFilters();
+		if (class_exists(Localization::class)) {
+			$this->translateAdministration();
+		}
 
 		foreach (self::$flashes as $key => $flash) {
 			self::$flashes[$key] = $this->translator->translate($flash);
@@ -44,6 +48,12 @@ class StartupTranslator {
 	 */
 	public function getTranslator() {
 		return $this->translator;
+	}
+
+	protected function translateAdministration() {
+		foreach (Localization::$translations as $name => $translation) {
+			Localization::$translations[$name] = $this->translator->translate($translation);
+		}
 	}
 
 	protected function translateForms() {
