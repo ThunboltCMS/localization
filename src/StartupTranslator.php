@@ -2,7 +2,7 @@
 
 namespace Thunbolt\Localization;
 
-use Kdyby\Translation\ITranslator;
+use Nette\Localization\ITranslator;
 use Nette;
 use Thunbolt\Administration\Localization;
 use Thunbolt\Templates\Filters;
@@ -10,7 +10,7 @@ use WebChemistry;
 
 class StartupTranslator {
 
-	/** @var Nette\Localization\ITranslator */
+	/** @var ITranslator */
 	private $translator;
 
 	/** @var array */
