@@ -7,7 +7,6 @@ use Nette\Localization\ITranslator;
 use Thunbolt\Localization\LocalizationException;
 use Thunbolt\Localization\StartupTranslator;
 use Thunbolt\Localization\Translator;
-use Thunbolt\Localization\TranslatorProvider;
 
 class LocalizationExtension extends CompilerExtension {
 
@@ -27,9 +26,6 @@ class LocalizationExtension extends CompilerExtension {
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
 
-		$def = $builder->addDefinition($this->prefix('translatorProvider'))
-			->setClass(TranslatorProvider::class);
-
 		if (!isset(self::$languages[$config['lang']])) {
 			throw new LocalizationException("Language '{$config['lang']}' not exists.");
 		}
@@ -39,14 +35,21 @@ class LocalizationExtension extends CompilerExtension {
 				->setClass(ITranslator::class)
 				->setFactory(Translator::class, [$config['lang']])
 				->setAutowired(FALSE);
-
-			$def->setArguments([$this->prefix('@translator')]);
 		}
 
 		if ($config['startup']) {
 			$builder->addDefinition($this->prefix('startupTranslation'))
 				->setClass(StartupTranslator::class)
 				->addTag('run');
+		}
+	}
+
+	public function beforeCompile() {
+		$builder = $this->getContainerBuilder();
+
+		if (!$builder->getByType(ITranslator::class) && $builder->hasDefinition($this->prefix('translator'))) {
+			$builder->getDefinition($this->prefix('translator'))
+				->setAutowired();
 		}
 	}
 

@@ -2,6 +2,7 @@
 
 namespace Thunbolt\Localization;
 
+use Kdyby\Translation\ITranslator;
 use Nette;
 use Thunbolt\Administration\Localization;
 use Thunbolt\Templates\Filters;
@@ -22,12 +23,8 @@ class StartupTranslator {
 		'remove' => 'core.flashes.remove'
 	];
 
-	/** @var bool */
-	private $isMock;
-
-	public function __construct(TranslatorProvider $translatorProvider) {
-		$this->translator = $translatorProvider->getTranslator();
-		//$this->is = $translatorProvider->isMock();
+	public function __construct(ITranslator $translator) {
+		$this->translator = $translator;
 
 		$this->translateForms();
 		$this->translateDateTime();
@@ -88,17 +85,6 @@ class StartupTranslator {
 		if (class_exists(WebChemistry\Forms\Controls\Date::class)) {
 			WebChemistry\Forms\Controls\Date::$dateFormat = 'core.date.datetime';
 		}
-		/*if ($this->isMock) {
-			foreach (Nette\Forms\Validator::$messages as $index => $message) {
-				Nette\Forms\Validator::$messages[$index] = $this->translator->translate($message);
-			}
-			if (class_exists(WebChemistry\Images\Controls\Checkbox::class)) {
-				WebChemistry\Images\Controls\Checkbox::$globalCaption = $this->translator->translate('core.forms.deleteImage');
-			}
-			if (class_exists(WebChemistry\Forms\Controls\Date::class)) {
-				WebChemistry\Forms\Controls\Date::$dateFormat = $this->translator->translate('core.date.datetime');
-			}
-		}*/
 	}
 
 	protected function translateDateTime() {
