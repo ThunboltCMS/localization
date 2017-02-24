@@ -13,16 +13,6 @@ class StartupTranslator {
 	/** @var ITranslator */
 	private $translator;
 
-	/** @var array */
-	public static $flashes = [
-		'success' => 'core.flashes.success',
-		'error' => 'core.flashes.error',
-		'warning' => 'core.flashes.warning',
-		'info' => 'core.flashes.info',
-		'roll' => 'core.flashes.roll',
-		'remove' => 'core.flashes.remove'
-	];
-
 	public function __construct(ITranslator $translator) {
 		$this->translator = $translator;
 
@@ -33,10 +23,6 @@ class StartupTranslator {
 		$this->translateFilters();
 		if (class_exists(Localization::class)) {
 			$this->translateAdministration();
-		}
-
-		foreach (self::$flashes as $key => $flash) {
-			self::$flashes[$key] = $this->translator->translate($flash);
 		}
 	}
 
