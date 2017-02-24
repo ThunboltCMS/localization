@@ -27,7 +27,7 @@ class StartupTranslator {
 
 	public function __construct(TranslatorProvider $translatorProvider) {
 		$this->translator = $translatorProvider->getTranslator();
-		$this->isMock = $translatorProvider->isMock();
+		//$this->is = $translatorProvider->isMock();
 
 		$this->translateForms();
 		$this->translateDateTime();
@@ -88,7 +88,7 @@ class StartupTranslator {
 		if (class_exists(WebChemistry\Forms\Controls\Date::class)) {
 			WebChemistry\Forms\Controls\Date::$dateFormat = 'core.date.datetime';
 		}
-		if ($this->isMock) {
+		/*if ($this->isMock) {
 			foreach (Nette\Forms\Validator::$messages as $index => $message) {
 				Nette\Forms\Validator::$messages[$index] = $this->translator->translate($message);
 			}
@@ -98,7 +98,7 @@ class StartupTranslator {
 			if (class_exists(WebChemistry\Forms\Controls\Date::class)) {
 				WebChemistry\Forms\Controls\Date::$dateFormat = $this->translator->translate('core.date.datetime');
 			}
-		}
+		}*/
 	}
 
 	protected function translateDateTime() {

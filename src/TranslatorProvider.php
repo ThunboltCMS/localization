@@ -26,8 +26,8 @@ class TranslatorProvider {
 	/**
 	 * @return bool
 	 */
-	public function isMock() {
-		return $this->translator instanceof IMockTranslator;
+	public function isCoreTranslator() {
+		return $this->translator instanceof Translator;
 	}
 
 }

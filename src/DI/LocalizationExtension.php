@@ -4,65 +4,50 @@ namespace Thunbolt\Localization\DI;
 
 use Nette\DI\CompilerExtension;
 use Nette\Localization\ITranslator;
-use Thunbolt\Localization\IMockTranslator;
 use Thunbolt\Localization\LocalizationException;
 use Thunbolt\Localization\StartupTranslator;
-use Thunbolt\Localization\Translations\CzechTranslation;
+use Thunbolt\Localization\Translator;
 use Thunbolt\Localization\TranslatorProvider;
 
 class LocalizationExtension extends CompilerExtension {
 
 	/** @var array */
-	public static $translators = [
-		'cs' => CzechTranslation::class,
+	private static $languages = [
+		'cs' => TRUE,
 	];
 
 	/** @var array */
 	public $defaults = [
-		'lang' => 'cs'
+		'lang' => 'cs',
+		'enable' => TRUE,
+		'startup' => TRUE,
 	];
 
 	public function loadConfiguration() {
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
 
-		$builder->addDefinition($this->prefix('mockTranslator'))
-			->setClass(IMockTranslator::class)
-			->setFactory($this->getTranslator($config['lang']))
-			->setAutowired(FALSE);
-
-		$builder->addDefinition($this->prefix('translatorProvider'))
+		$def = $builder->addDefinition($this->prefix('translatorProvider'))
 			->setClass(TranslatorProvider::class);
 
-		$builder->addDefinition($this->prefix('startupTranslation'))
-			->setClass(StartupTranslator::class)
-			->addTag('run');
-	}
-
-	/**
-	 * @param string $lang
-	 * @throws LocalizationException
-	 * @return string
-	 */
-	private function getTranslator($lang) {
-		if (!isset(self::$translators[$lang])) {
-			throw new LocalizationException("Translator for lang '$lang' not exists.");
+		if (!isset(self::$languages[$config['lang']])) {
+			throw new LocalizationException("Language '{$config['lang']}' not exists.");
 		}
 
-		return self::$translators[$lang];
-	}
+		if ($config['enable']) {
+			$builder->addDefinition($this->prefix('translator'))
+				->setClass(ITranslator::class)
+				->setFactory(Translator::class, [$config['lang']])
+				->setAutowired(FALSE);
 
-	public function beforeCompile() {
-		$builder = $this->getContainerBuilder();
-
-		if ($service = $builder->getByType(ITranslator::class)) {
-			$service = '@' . $service;
-		} else {
-			$service = $this->prefix('@mockTranslator');
+			$def->setArguments([$this->prefix('@translator')]);
 		}
 
-		$builder->getDefinition($this->prefix('translatorProvider'))
-			->setArguments([$service]);
+		if ($config['startup']) {
+			$builder->addDefinition($this->prefix('startupTranslation'))
+				->setClass(StartupTranslator::class)
+				->addTag('run');
+		}
 	}
 
 }
