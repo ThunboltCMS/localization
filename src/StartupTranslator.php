@@ -40,31 +40,30 @@ class StartupTranslator {
 	}
 
 	protected function translateForms() {
-		Nette\Forms\Validator::$messages = [
-				Nette\Forms\Controls\CsrfProtection::PROTECTION => 'core.forms.protection',
-				Nette\Application\UI\Form::EQUAL => 'core.forms.equal',
-				Nette\Application\UI\Form::NOT_EQUAL => 'core.forms.notEqual',
-				Nette\Application\UI\Form::FILLED => 'core.forms.filled',
-				Nette\Application\UI\Form::BLANK => 'core.forms.blank',
-				Nette\Application\UI\Form::MIN_LENGTH => 'core.forms.minLength',
-				Nette\Application\UI\Form::MAX_LENGTH => 'core.forms.maxLength',
-				Nette\Application\UI\Form::LENGTH => 'core.forms.length',
-				Nette\Application\UI\Form::EMAIL => 'core.forms.email',
-				Nette\Application\UI\Form::URL => 'core.forms.url',
-				Nette\Application\UI\Form::INTEGER => 'core.forms.integer',
-				Nette\Application\UI\Form::FLOAT => 'core.forms.float',
-				Nette\Application\UI\Form::MIN => 'core.forms.min',
-				Nette\Application\UI\Form::MAX => 'core.forms.max',
-				Nette\Application\UI\Form::RANGE => 'core.forms.range',
-				Nette\Application\UI\Form::MAX_FILE_SIZE => 'core.forms.maxFileSize',
-				Nette\Application\UI\Form::MAX_POST_SIZE => 'core.forms.maxPostSize',
-				Nette\Application\UI\Form::IMAGE => 'core.forms.image',
-				Nette\Application\UI\Form::MIME_TYPE => 'core.forms.mimeType',
-				Nette\Forms\Controls\SelectBox::VALID => 'core.forms.select.valid',
-				WebChemistry\Forms\Controls\Date::VALID => 'core.forms.webchemistry.date',
-				WebChemistry\Forms\Controls\Tags::VALID => 'core.forms.webchemistry.tags',
-				Nette\Forms\Controls\UploadControl::VALID => 'core.forms.upload.valid'
-			] + Nette\Forms\Validator::$messages;
+		Nette\Forms\Validator::$messages[Nette\Forms\Controls\CsrfProtection::PROTECTION] = 'core.forms.protection';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::EQUAL] = 'core.forms.equal';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::NOT_EQUAL] = 'core.forms.notEqual';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::FILLED] = 'core.forms.filled';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::BLANK] = 'core.forms.blank';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MIN_LENGTH] = 'core.forms.minLength';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MAX_LENGTH] = 'core.forms.maxLength';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::LENGTH] = 'core.forms.length';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::EMAIL] = 'core.forms.email';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::URL] = 'core.forms.url';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::INTEGER] = 'core.forms.integer';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::FLOAT] = 'core.forms.float';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MIN] = 'core.forms.min';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MAX] = 'core.forms.max';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::RANGE] = 'core.forms.range';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MAX_FILE_SIZE] = 'core.forms.maxFileSize';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MAX_POST_SIZE] = 'core.forms.maxPostSize';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::IMAGE] = 'core.forms.image';
+		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MIME_TYPE] = 'core.forms.mimeType';
+		Nette\Forms\Validator::$messages[Nette\Forms\Controls\SelectBox::VALID] = 'core.forms.select.valid';
+		Nette\Forms\Validator::$messages[WebChemistry\Forms\Controls\Date::VALID] = 'core.forms.webchemistry.date';
+		Nette\Forms\Validator::$messages[WebChemistry\Forms\Controls\Tags::VALID] = 'core.forms.webchemistry.tags';
+		Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID] = 'core.forms.upload.valid';
+
 		if (class_exists(WebChemistry\Images\Controls\Checkbox::class)) {
 			WebChemistry\Images\Controls\Checkbox::$globalCaption = 'core.forms.deleteImage';
 		}
