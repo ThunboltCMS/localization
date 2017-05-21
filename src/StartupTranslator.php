@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thunbolt\Localization;
 
 use Nette\Localization\ITranslator;
@@ -26,20 +28,17 @@ class StartupTranslator {
 		}
 	}
 
-	/**
-	 * @return Nette\Localization\ITranslator
-	 */
-	public function getTranslator() {
+	public function getTranslator(): ITranslator {
 		return $this->translator;
 	}
 
-	protected function translateAdministration() {
+	protected function translateAdministration(): void {
 		foreach (Localization::$translations as $name => $translation) {
 			Localization::$translations[$name] = $this->translator->translate($translation);
 		}
 	}
 
-	protected function translateForms() {
+	protected function translateForms(): void {
 		Nette\Forms\Validator::$messages[Nette\Forms\Controls\CsrfProtection::PROTECTION] = 'core.forms.protection';
 		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::EQUAL] = 'core.forms.equal';
 		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::NOT_EQUAL] = 'core.forms.notEqual';
@@ -72,7 +71,7 @@ class StartupTranslator {
 		}
 	}
 
-	protected function translateDateTime() {
+	protected function translateDateTime(): void {
 		$translate = [
 			1 => 'core.months.jan', 'core.months.feb', 'core.months.mar', 'core.months.apr', 'core.months.may',
 			'core.months.june', 'core.months.july', 'core.months.aug', 'core.months.sep', 'core.months.oct',
@@ -95,16 +94,16 @@ class StartupTranslator {
 		}
 	}
 
-	protected function translateStrings() {
+	protected function translateStrings(): void {
 		WebChemistry\Utils\Strings::$decPoint = $this->translator->translate('core.strings.decPoint');
 		WebChemistry\Utils\Strings::$sepThousands = $this->translator->translate('core.strings.sepThousands');
 	}
 
-	protected function translateTimeAgo() {
+	protected function translateTimeAgo(): void {
 		WebChemistry\Utils\DateTime::$timeAgoCallback = [$this, 'timeAgo'];
 	}
 
-	protected function translateFilters() {
+	protected function translateFilters(): void {
 		Filters::$booleans = [
 			$this->translator->translate('core.filters.no'),
 			$this->translator->translate('core.filters.yes')

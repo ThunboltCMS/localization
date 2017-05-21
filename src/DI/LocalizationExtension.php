@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thunbolt\Localization\DI;
 
 use Nette\DI\CompilerExtension;
@@ -22,7 +24,7 @@ class LocalizationExtension extends CompilerExtension {
 		'startup' => TRUE,
 	];
 
-	public function loadConfiguration() {
+	public function loadConfiguration(): void {
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
 
@@ -44,7 +46,7 @@ class LocalizationExtension extends CompilerExtension {
 		}
 	}
 
-	public function beforeCompile() {
+	public function beforeCompile(): void {
 		$builder = $this->getContainerBuilder();
 
 		if (!$builder->getByType(ITranslator::class) && $builder->hasDefinition($this->prefix('translator'))) {

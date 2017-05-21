@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thunbolt\Localization;
 
 use Nette\Localization\ITranslator;
@@ -9,10 +11,7 @@ class Translator implements ITranslator {
 	/** @var array */
 	private $translations = [];
 
-	/**
-	 * @param string $lang
-	 */
-	public function __construct($lang) {
+	public function __construct(string $lang) {
 		$this->translations = require __DIR__ . '/sources/' . $lang . '.php';
 	}
 
@@ -21,7 +20,7 @@ class Translator implements ITranslator {
 	 * @param null|int $count
 	 * @return string
 	 */
-	public function translate($message, $count = NULL) {
+	public function translate($message, int $count = NULL): string {
 		if (isset($this->translations[$message])) {
 			return $this->translations[$message];
 		}
