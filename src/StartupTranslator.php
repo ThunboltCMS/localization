@@ -7,7 +7,7 @@ namespace Thunbolt\Localization;
 use Nette\Localization\ITranslator;
 use Nette;
 use Thunbolt\Administration\Localization;
-use Thunbolt\Templates\Filters;
+use WebChemistry\Utils\Filters;
 use WebChemistry;
 use WebChemistry\Forms\Controls\Suggestion;
 
@@ -36,8 +36,8 @@ class StartupTranslator {
 			$this->translateDateTime();
 			$this->translateStrings();
 			$this->translateTimeAgo();
+			$this->translateFilters();
 		}
-		$this->translateFilters();
 		if (class_exists(Localization::class)) {
 			$this->translateAdministration();
 		}
