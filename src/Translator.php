@@ -20,7 +20,7 @@ class Translator implements ITranslator {
 	 * @param null|int $count
 	 * @return string
 	 */
-	public function translate($message, int $count = NULL): string {
+	public function translate($message, ?int $count = NULL): string {
 		if (isset($this->translations[$message])) {
 			return $this->translations[$message];
 		}

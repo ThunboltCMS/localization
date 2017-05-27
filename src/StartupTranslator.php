@@ -9,19 +9,34 @@ use Nette;
 use Thunbolt\Administration\Localization;
 use Thunbolt\Templates\Filters;
 use WebChemistry;
+use WebChemistry\Forms\Controls\Suggestion;
 
 class StartupTranslator {
+
+	protected const WEBCHEMISTRY_CONTROLS = 0;
+	protected const WEBCHEMISTRY_UTILS = 1;
 
 	/** @var ITranslator */
 	private $translator;
 
+	/** @var array */
+	private $extensions = [
+		self::WEBCHEMISTRY_CONTROLS => FALSE,
+		self::WEBCHEMISTRY_UTILS => FALSE,
+	];
+
 	public function __construct(ITranslator $translator) {
 		$this->translator = $translator;
 
+		$this->extensions[self::WEBCHEMISTRY_CONTROLS] = class_exists(Suggestion::class);
+		$this->extensions[self::WEBCHEMISTRY_UTILS] = class_exists(WebChemistry\Utils\DateTime::class);
+
 		$this->translateForms();
-		$this->translateDateTime();
-		$this->translateStrings();
-		$this->translateTimeAgo();
+		if ($this->extensions[self::WEBCHEMISTRY_UTILS]) {
+			$this->translateDateTime();
+			$this->translateStrings();
+			$this->translateTimeAgo();
+		}
 		$this->translateFilters();
 		if (class_exists(Localization::class)) {
 			$this->translateAdministration();
@@ -59,15 +74,16 @@ class StartupTranslator {
 		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::IMAGE] = 'core.forms.image';
 		Nette\Forms\Validator::$messages[Nette\Application\UI\Form::MIME_TYPE] = 'core.forms.mimeType';
 		Nette\Forms\Validator::$messages[Nette\Forms\Controls\SelectBox::VALID] = 'core.forms.select.valid';
-		Nette\Forms\Validator::$messages[WebChemistry\Forms\Controls\Date::VALID] = 'core.forms.webchemistry.date';
-		Nette\Forms\Validator::$messages[WebChemistry\Forms\Controls\Tags::VALID] = 'core.forms.webchemistry.tags';
 		Nette\Forms\Validator::$messages[Nette\Forms\Controls\UploadControl::VALID] = 'core.forms.upload.valid';
+		if ($this->extensions[self::WEBCHEMISTRY_CONTROLS]) {
+			Nette\Forms\Validator::$messages[WebChemistry\Forms\Controls\Date::VALID] = 'core.forms.webchemistry.date';
+			Nette\Forms\Validator::$messages[WebChemistry\Forms\Controls\Tags::VALID] = 'core.forms.webchemistry.tags';
+
+			WebChemistry\Forms\Controls\Date::$dateFormat = 'core.date.datetime';
+		}
 
 		if (class_exists(WebChemistry\Images\Controls\Checkbox::class)) {
 			WebChemistry\Images\Controls\Checkbox::$globalCaption = 'core.forms.deleteImage';
-		}
-		if (class_exists(WebChemistry\Forms\Controls\Date::class)) {
-			WebChemistry\Forms\Controls\Date::$dateFormat = 'core.date.datetime';
 		}
 	}
 
