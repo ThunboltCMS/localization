@@ -13,7 +13,7 @@ use Thunbolt\Localization\Translator;
 class LocalizationExtension extends CompilerExtension {
 
 	/** @var array */
-	private static $languages = [
+	private const LANGUAGES = [
 		'cs' => TRUE,
 	];
 
@@ -28,7 +28,7 @@ class LocalizationExtension extends CompilerExtension {
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
 
-		if (!isset(self::$languages[$config['lang']])) {
+		if (!isset(self::LANGUAGES[$config['lang']])) {
 			throw new LocalizationException("Language '{$config['lang']}' not exists.");
 		}
 
