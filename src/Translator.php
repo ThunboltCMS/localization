@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Thunbolt\Localization;
 
-use Nette\Localization\ITranslator;
-
-class Translator implements ITranslator {
+class Translator implements IStartupTranslator {
 
 	/** @var array */
 	private $translations = [];
@@ -25,7 +23,7 @@ class Translator implements ITranslator {
 			return $this->translations[$message];
 		}
 
-		return $message;
+		return (string) $message;
 	}
 
 }
