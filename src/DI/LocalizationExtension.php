@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thunbolt\Localization\DI;
 
+use Nette;
 use Nette\DI\CompilerExtension;
 use Nette\Localization\ITranslator;
 use Thunbolt\Localization\IStartupTranslator;
@@ -42,8 +43,16 @@ class LocalizationExtension extends CompilerExtension {
 
 		if ($config['startup']) {
 			$builder->addDefinition($this->prefix('startupTranslation'))
-				->setFactory(StartupTranslator::class, [$config['enable'] ? $this->prefix('@translator') : null])
-				->addTag('run');
+				->setFactory(StartupTranslator::class, [$config['enable'] ? $this->prefix('@translator') : null]);
+		}
+	}
+
+	public function afterCompile(Nette\PhpGenerator\ClassType $class) {
+		$config = $this->getConfig();
+		$init = $class->getMethods()['initialize'];
+
+		if ($config['startup']) {
+			$init->addBody('$this->getService(?);', [$this->prefix('startupTranslation')]);
 		}
 	}
 
